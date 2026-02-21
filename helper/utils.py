@@ -48,6 +48,7 @@ def repeating_decimal(p, q):
     return non_repeating, repeating
 
 def pythagorean_triples(n):
+    """Returns pythagorean triples with maximum value of n"""
     triples = []
     for a in range(1, n+1):
         for b in range(a, n+1):  # b >= a to avoid duplicates like (3,4,5) and (4,3,5)
