@@ -2,4 +2,10 @@
 /.venv
 /.vscode
 /_test.py
-/__pycache__
+**/__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.db

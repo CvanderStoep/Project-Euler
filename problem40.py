@@ -1,10 +1,12 @@
-champernow = ''.join(str(n) for n in range(1, 1_000_000))
+champernowne = ''.join(str(n) for n in range(1, 1_000_000))
 
 product = 1
 for i in range(7):
-    product *= int(champernow[10**i -1])
+    product *= int(champernowne[10**i -1])
 print(product)
 
+
+# algorithm made using CoPilot
 def champernowne_digit(n: int) -> int:
     """Return the nth digit (1-indexed) of the Champernowne constant."""
     k = 1
