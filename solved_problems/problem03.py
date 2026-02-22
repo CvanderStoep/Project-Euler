@@ -2,9 +2,6 @@ from sympy import factorint
 from helper.utils import is_prime, prime_factors
 
 
-
-
-
 # Example usage
 if __name__ == "__main__":
     number = 600851475143
