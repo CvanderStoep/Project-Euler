@@ -1,5 +1,5 @@
 from math import prod as product
-from helper.utils import get_primes
+from mathlib.primes import get_primes
 
 
 # Get primes between 0-10

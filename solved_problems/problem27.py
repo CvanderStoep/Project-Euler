@@ -1,4 +1,4 @@
-from helper.utils import is_prime
+from mathlib.primes import is_prime
 def form(a, b, n):
     return n*n + a * n + b
 

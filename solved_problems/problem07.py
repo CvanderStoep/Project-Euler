@@ -1,4 +1,4 @@
-from helper.utils import is_prime
+from mathlib.primes import is_prime
 
 def generate_primes():
     num = 2

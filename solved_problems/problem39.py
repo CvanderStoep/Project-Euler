@@ -1,5 +1,5 @@
 import math
-from helper.utils import pythagorean_triples
+from mathlib.utils import pythagorean_triples
 
 p_max = 1
 total_p_max = 0

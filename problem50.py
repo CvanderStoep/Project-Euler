@@ -1,4 +1,4 @@
-from helper.utils import sieve_of_eratosthenes
+from mathlib.primes import sieve_of_eratosthenes
 N = 1_000_000
 
 primes = sieve_of_eratosthenes(N)

@@ -1,4 +1,4 @@
-from helper.utils import divisors
+from mathlib.arithmetic import divisors
 def sum_divisors(n):
     return sum(divisors(n)[:-1])
 

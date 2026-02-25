@@ -1,4 +1,4 @@
-from helper.utils import simplify_fraction
+from mathlib.utils import simplify_fraction
 fractions = []
 for numerator in range(10, 99):
     for denominator in range(numerator + 1, 100):

@@ -1,4 +1,4 @@
-from helper.utils import divisors
+from mathlib.arithmetic import divisors
 
 def triangle_generator():
     """Generate Triangle numbers indefinitely"""

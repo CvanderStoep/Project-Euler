@@ -1,5 +1,5 @@
 from itertools import permutations
-from helper.utils import is_prime
+from mathlib.primes import is_prime
 numbers = list(range(1,8))  # tried 9 and 8 digits numbers, but did not exist
 print(numbers)
 

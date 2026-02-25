@@ -1,4 +1,4 @@
-from helper.utils import fib_generator, fibonacci
+from mathlib.sequences import fib_generator, fibonacci
 
 # Example usage
 if __name__ == "__main__":

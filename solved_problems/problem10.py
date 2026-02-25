@@ -1,4 +1,4 @@
-from helper.utils import sieve_of_eratosthenes, get_primes
+from mathlib.primes import sieve_of_eratosthenes, get_primes
 
 
 # Example usage

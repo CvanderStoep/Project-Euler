@@ -1,5 +1,5 @@
 from decimal import Decimal, getcontext
-from helper.utils import repeating_decimal
+from mathlib.utils import repeating_decimal
 
 getcontext().prec = 60   # enough precision for 48 digits
 

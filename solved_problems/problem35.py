@@ -1,4 +1,4 @@
-from helper.utils import rotate_left, is_prime
+from mathlib.utils import rotate_left, is_prime
 number_circular_primes = 0
 for n in range(2,1_000_000):
     if not is_prime(n):

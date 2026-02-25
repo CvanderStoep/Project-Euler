@@ -1,4 +1,4 @@
-from helper.utils import is_prime
+from mathlib.primes import is_prime
 
 for p in range(1000, 10000):          # only 4-digit primes matter
     if not is_prime(p):

@@ -1,4 +1,4 @@
-from helper.utils import is_palindrome
+from mathlib.utils import is_palindrome
 
 sum_palindrome = 0
 for n in range(1, 1_000_000):

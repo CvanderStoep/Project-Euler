@@ -1,4 +1,4 @@
-from helper.utils import is_prime, get_primes
+from mathlib.primes import is_prime, get_primes
 import math
 
 def is_perfect_square(n):

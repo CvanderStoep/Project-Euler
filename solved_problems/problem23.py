@@ -1,4 +1,4 @@
-from helper.utils import is_abundant
+from mathlib.utils import is_abundant
 
 def can_be_written_as_sum(nums, target):
     s = set(nums)

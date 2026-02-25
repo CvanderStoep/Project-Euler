@@ -1,4 +1,4 @@
-from helper.utils import factorial
+from math import factorial
 
 number = factorial(100)
 number_string = str(number)

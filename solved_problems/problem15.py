@@ -1,5 +1,5 @@
-from helper.utils import factorial
-import math
+# from mathlib.number_theory import factorial
+from math import factorial
 
 # how many routes can be found in a 20x20 grid:
 # 40! / (20! * 20!)

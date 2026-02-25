@@ -1,4 +1,4 @@
-from helper.utils import prime_factors
+from mathlib.primes import prime_factors
 
 def distinct_pf(n):
     return set(prime_factors(n))

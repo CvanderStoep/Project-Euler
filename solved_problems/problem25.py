@@ -1,4 +1,4 @@
-from helper.utils import fib_generator
+from mathlib.utils import fib_generator
 
 fib_gen = fib_generator()
 

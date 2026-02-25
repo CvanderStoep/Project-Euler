@@ -1,5 +1,5 @@
 from sympy import factorint
-from helper.utils import is_prime, prime_factors
+from mathlib.primes import is_prime, prime_factors
 
 
 # Example usage

@@ -1,4 +1,4 @@
-from helper.utils import is_prime
+from mathlib.primes import is_prime
 
 sum_primes = 0
 for n in range(10, 1_000_000):

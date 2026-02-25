@@ -1,4 +1,4 @@
-from helper.utils import collatz_generator, collatz_chain
+from mathlib.sequences import collatz_generator, collatz_chain
 
 
 max_index, longest_chain = 1, 1
