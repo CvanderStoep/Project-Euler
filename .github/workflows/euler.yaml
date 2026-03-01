@@ -1,0 +1,24 @@
+name: Euler Solutions
+
+on: [push, pull_request]
+
+jobs:
+  run-euler:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run all Euler problems
+        run: |
+          echo "Running all Project Euler solutions..."
+          for f in problem*.py; do
+            echo "---- Running $f ----"
+            python "$f"
+            echo ""
+          done
