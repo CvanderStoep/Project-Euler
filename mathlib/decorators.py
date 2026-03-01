@@ -9,3 +9,4 @@ def timed(func):
         print(f"{func.__name__} took {end - start:.6f} seconds")
         return result
     return wrapper
+

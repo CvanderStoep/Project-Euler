@@ -8,7 +8,6 @@ with open('problem54.txt', 'r') as f:
         playing_cards = deal.split(" ")
         player1= playing_cards[:5]
         player2= playing_cards[5:]
-        # print(player1, player2)
         deals.append((player1, player2))
 
 
@@ -93,24 +92,19 @@ def hand_rank(hand) -> Tuple[int, Tuple[int, ...]]:
 
 hand1 = ["AS", "KS", "QS", "JS", "TS"]  # Royal flush
 hand2 = ["9C", "9D", "9H", "9S", "2D"]  # Four of a kind
+hand3 = ["KC", "6C", "7H", "6S", "9C"]  # One pair
 
 print(hand_rank(hand1))  # (8, (14,))
 print(hand_rank(hand2))  # (7, (9, 2))
+print(hand_rank(hand3))  # (1, (6, 13, 9, 7))
 
 print(hand_rank(hand1) > hand_rank(hand2))  # True
 
 p1_wins = 0
 for player1, player2 in deals:
-    # player1 = sorted(player1, key=lambda c: player_cards_order[c[0]])    
-    # player2 = sorted(player2, key=lambda c: player_cards_order[c[0]])
     p1 = hand_rank(player1)
     p2 = hand_rank(player2)
     if p1 > p2:
-        winner = 'p1'
         p1_wins += 1
-    elif p2 > p1:
-        winner = 'p2'
-    else:
-        winner = 'draw'
-    # print(player1, p1, player2, p2, winner)
+
 print(f'{p1_wins= }')
