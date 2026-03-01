@@ -1,6 +1,7 @@
 name: My First Workflow
 
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   build:
