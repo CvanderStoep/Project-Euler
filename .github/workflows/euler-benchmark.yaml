@@ -14,5 +14,5 @@ jobs:
       - run: |
           for f in problem*.py; do
             echo "Benchmarking $f"
-            /usr/bin/time -f "Time: %E" python "$f"
+            /usr/bin/time -f "Time: %E CPU: %P" python "$f"
           done
