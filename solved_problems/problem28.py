@@ -7,10 +7,10 @@ total_sum_diagonal = 0
 for layer in range(2, 502):
     square = 2*layer -1
     _, stop = numbers_in_layer(layer)
-    upper_right = stop
-    upper_left = upper_right - square + 1
-    down_left = upper_left - square + 1
-    down_right = down_left - square + 1
+    down_right = stop
+    down_left = down_right - square + 1
+    upper_left = down_left - square + 1
+    upper_right = upper_left - square + 1
     total_sum_diagonal += upper_left + upper_right + down_left + down_right
 
 print(f'{total_sum_diagonal + 1= }')

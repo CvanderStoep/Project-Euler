@@ -1,5 +1,36 @@
 from mathlib.primes import sieve_of_eratosthenes, is_prime
 from functools import lru_cache
+from itertools import combinations
+
+MAX_PRIME = 1000
+SET_LENGTH = 4
+
+@lru_cache(maxsize=None)
+def valid_set(prime_set):
+    for ps in combinations(prime_set, 2):
+        p1, p2 = ps
+        p3 = int(str(p1)+str(p2))
+        p4 = int(str(p2)+str(p1))
+        if not is_prime(p3) or not is_prime(p4):
+            return False
+    return True
+
+
+primes = sieve_of_eratosthenes(MAX_PRIME)
+p2 = set()
+
+
+for prime_set in combinations(primes, SET_LENGTH):
+    if valid_set(prime_set):
+        print(prime_set)
+        break
+
+
+#-----------------------------------------------------------------
+# Below is the solution for larger sets using CoPilot as my friend.
+
+from mathlib.primes import sieve_of_eratosthenes, is_prime
+from functools import lru_cache
 
 
 # ------------------------------------------------------------
