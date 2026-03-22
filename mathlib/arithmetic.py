@@ -1,4 +1,5 @@
-from math import gcd
+from math import gcd, isqrt
+
 
 def simplify_fraction(a, b):
     g = gcd(a, b)
@@ -19,3 +20,15 @@ def is_abundant(n):
     """Return True if n is an abundant number."""
     proper = divisors(n)[:-1]
     return sum(proper) > n
+
+
+# ------------------------------------------------------------
+# Number utilities
+# ------------------------------------------------------------
+
+def is_perfect_square(n: int) -> bool:
+    """Return True if n is a perfect square."""
+    if n < 0:
+        return False
+    r = isqrt(n)
+    return r * r == n

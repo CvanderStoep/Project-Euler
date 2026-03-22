@@ -1,17 +1,7 @@
 import math
 from mathlib.number_theory import sqrt_continued_fraction
+from mathlib.arithmetic import is_perfect_square
 
-
-# ------------------------------------------------------------
-# Number utilities
-# ------------------------------------------------------------
-
-def is_perfect_square(n: int) -> bool:
-    """Return True if n is a perfect square."""
-    if n < 0:
-        return False
-    r = math.isqrt(n)
-    return r * r == n
 
 
 # ------------------------------------------------------------
