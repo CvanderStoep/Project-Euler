@@ -41,3 +41,31 @@ def sieve_of_eratosthenes(limit):
             for j in range(i*i, limit + 1, i):
                 is_prime[j] = False
     return [n for n in range(2, limit + 1) if is_prime[n]]
+
+
+def euler_totient(limit: int) -> list[int]:
+    """
+    Compute Euler's totient function φ(n) for all integers 0 ≤ n ≤ limit.
+
+    This uses a sieve-based approach:
+    - Initialize phi[n] = n.
+    - For each prime i, update all multiples j of i using:
+          phi[j] -= phi[j] // i
+      which applies the multiplicative totient formula.
+
+    Parameters
+    ----------
+    limit : int
+        The maximum integer n for which φ(n) will be computed.
+
+    Returns
+    -------
+    list[int]
+        A list phi where phi[n] gives the value of Euler's totient function φ(n).
+    """
+    phi = list(range(limit + 1))
+    for i in range(2, limit + 1):
+        if phi[i] == i:  # i is prime
+            for j in range(i, limit + 1, i):
+                phi[j] -= phi[j] // i
+    return phi
