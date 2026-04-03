@@ -1,7 +1,9 @@
 from mathlib.primes import euler_totient
 
+
 def are_permutations(a, b):
     return sorted(str(a)) == sorted(str(b))
+
 
 limit = 10**7
 phi = euler_totient(limit)
