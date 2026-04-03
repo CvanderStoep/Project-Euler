@@ -1,5 +1,6 @@
 from collections import defaultdict
-with open('problem67.txt', 'r') as f:
+
+with open("problem67.txt", "r") as f:
     content = f.read().splitlines()
 # print(content)
 grid = [list(map(int, line.split())) for line in content]
@@ -7,12 +8,12 @@ grid = [list(map(int, line.split())) for line in content]
 
 # moving top-down
 triangle_sum = defaultdict(int)
-triangle_sum[(0,0)] = grid[0][0]
+triangle_sum[(0, 0)] = grid[0][0]
 
 for j in range(1, len(grid)):
     for i in range(len(grid[j])):
-        sum_l = triangle_sum[(i-1,j-1)]  + grid[j][i]
-        sum_r = triangle_sum[(i,j-1)]  + grid[j][i]
+        sum_l = triangle_sum[(i - 1, j - 1)] + grid[j][i]
+        sum_r = triangle_sum[(i, j - 1)] + grid[j][i]
         triangle_sum[(i, j)] = max(sum_l, sum_r)
 
 print(triangle_sum)

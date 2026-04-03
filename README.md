@@ -1,0 +1,1 @@
+uv run problem70.py
