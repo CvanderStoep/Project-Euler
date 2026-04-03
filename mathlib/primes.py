@@ -69,3 +69,6 @@ def euler_totient(limit: int) -> list[int]:
             for j in range(i, limit + 1, i):
                 phi[j] -= phi[j] // i
     return phi
+
+def relative_primes(n):
+    return [k for k in range(1, n) if math.gcd(k, n) == 1]
