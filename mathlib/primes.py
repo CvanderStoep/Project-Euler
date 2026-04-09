@@ -1,4 +1,4 @@
-from math import isqrt
+from math import isqrt, gcd
 
 def is_prime(n):
     if n < 2:
@@ -71,4 +71,4 @@ def euler_totient(limit: int) -> list[int]:
     return phi
 
 def relative_primes(n):
-    return [k for k in range(1, n) if math.gcd(k, n) == 1]
+    return [k for k in range(1, n) if gcd(k, n) == 1]
