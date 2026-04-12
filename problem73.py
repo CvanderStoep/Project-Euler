@@ -13,5 +13,6 @@ for d in range(1, N + 1):
         # pairs.append((n, d))
         count += 1
 
+
 # print(len(pairs))
 print(count)
