@@ -1,4 +1,4 @@
-from mathlib.primes import euler_totient, relative_primes
+from mathlib.primes import relative_primes
 
 # print(euler_totient(12000))
 # print(relative_primes(12000))
