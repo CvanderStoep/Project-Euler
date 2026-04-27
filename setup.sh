@@ -1,0 +1,81 @@
+#!/bin/zsh
+
+# Detecteer projectnaam uit huidige directory
+PROJECT_NAME=$(basename "$PWD")
+VENV_DIR="/Users/carlo/venvs/$PROJECT_NAME/.venv"
+VSCODE_DIR=".vscode"
+
+echo "🔧 Project gedetecteerd: $PROJECT_NAME"
+echo "📁 Virtuele omgeving: $VENV_DIR"
+echo ""
+
+# --- REMOVE OLD VENV IF EXISTS ---
+if [ -d "$VENV_DIR" ]; then
+    echo "🗑️  Oude .venv gevonden — verwijderen..."
+    rm -rf "$VENV_DIR"
+    echo "✔️  Oude .venv verwijderd"
+    echo ""
+fi
+
+# --- CREATE VENV ---
+echo "➡️  Maken van virtuele omgeving..."
+mkdir -p "/Users/carlo/venvs/$PROJECT_NAME"
+python3 -m venv "$VENV_DIR"
+echo "✔️  Virtuele omgeving aangemaakt"
+echo ""
+
+# --- CREATE .vscode DIRECTORY ---
+echo "➡️  Maken van .vscode map..."
+mkdir -p "$VSCODE_DIR"
+echo "✔️  .vscode map aangemaakt"
+echo ""
+
+# --- CREATE settings.json ---
+echo "➡️  Schrijven van settings.json..."
+cat > "$VSCODE_DIR/settings.json" <<EOF
+{
+    "python.defaultInterpreterPath": "$VENV_DIR/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": false
+}
+EOF
+echo "✔️  settings.json aangemaakt"
+echo ""
+
+# --- CREATE launch.json ---
+echo "➡️  Schrijven van launch.json..."
+cat > "$VSCODE_DIR/launch.json" <<EOF
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "\${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "$VENV_DIR/bin/python"
+        }
+    ]
+}
+EOF
+echo "✔️  launch.json aangemaakt"
+echo ""
+
+# --- ACTIVATE VENV ---
+echo "➡️  Activeren van virtuele omgeving..."
+source "$VENV_DIR/bin/activate"
+
+echo "➡️  Upgraden van pip..."
+pip install --upgrade pip
+
+echo ""
+echo "🎉 Setup compleet!"
+echo "Je virtuele omgeving is actief."
+echo "VS Code is volledig geconfigureerd."
+echo ""
+echo "Gebruik nu: code ."
