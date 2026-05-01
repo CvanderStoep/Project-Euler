@@ -36,6 +36,26 @@ def get_primes(start, end):
 
 
 def sieve_of_eratosthenes(limit):
+    """
+    Generate all prime numbers up to and including `limit` using the
+    Sieve of Eratosthenes.
+
+    Parameters
+    ----------
+    limit : int
+        Upper bound (inclusive) for generating prime numbers.
+
+    Returns
+    -------
+    list[int]
+        A list of all prime numbers ≤ `limit`. Returns an empty list
+        if `limit` is less than 2.
+
+    Examples
+    --------
+    >>> sieve_of_eratosthenes(10)
+    [2, 3, 5, 7]
+    """
     if limit < 2:
         return []
     is_prime = [True] * (limit + 1)
@@ -45,6 +65,8 @@ def sieve_of_eratosthenes(limit):
             for j in range(i * i, limit + 1, i):
                 is_prime[j] = False
     return [n for n in range(2, limit + 1) if is_prime[n]]
+
+
 
 
 def euler_totient(limit: int) -> list[int]:

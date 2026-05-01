@@ -53,7 +53,7 @@ cat > "$VSCODE_DIR/launch.json" <<EOF
     "configurations": [
         {
             "name": "Python: Current File",
-            "type": "debugpy",
+            "type": "python",
             "request": "launch",
             "program": "\${file}",
             "console": "integratedTerminal",

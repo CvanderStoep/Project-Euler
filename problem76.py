@@ -9,6 +9,6 @@ def count_unique_change(n, numbers):
     return dp[n]
 
 
-N = 10
+N = 100
 numbers = tuple(range(1, N))
 print("count =", count_unique_change(N, numbers))
