@@ -1,4 +1,5 @@
 from math import gcd, isqrt
+from decimal import Decimal, getcontext
 
 
 def simplify_fraction(a, b):
@@ -32,3 +33,27 @@ def is_perfect_square(n: int) -> bool:
         return False
     r = isqrt(n)
     return r * r == n
+
+def first_N_digits_sqrt(n: int, digits: int) -> str:
+
+    """
+Return the first `digits` digits of the decimal expansion of √n,
+starting from the integer part and using truncation (not rounding).
+
+The function computes √n with extra internal precision to ensure
+that the first `digits` digits are correct, removes the decimal
+point, and returns the leading `digits` characters of the resulting
+digit string.
+
+Example
+-------
+>>> first_N_digits_sqrt(2, 10)
+'1414213562'
+"""
+    # Use extra precision so we can safely truncate
+    getcontext().prec = digits + 10
+
+    root = Decimal(n).sqrt()
+    s = str(root)          # e.g. '1.41421356...'
+    s = s.replace('.', '') # remove decimal point
+    return s[:digits]         # first 100 digits (including integer part)

@@ -1,31 +1,3 @@
-# def is_divisible_by_one_million(n: int) -> bool:
-#     return n % 1_000_000 == 0
-
-
-# def count_unique_change(n, numbers):
-#     dp = [0] * (n + 1)
-#     dp[0] = 1
-
-#     for coin in numbers:
-#         for amount in range(coin, n + 1):
-#             dp[amount] += dp[amount - coin]
-
-#     return dp[n]
-
-# #compared to problem 76, N itself is also a solution
-# #this algorithm takes too long to run, need different solution
-
-# N = 1
-# while True:
-#     numbers = tuple(range(1, N))
-#     count = count_unique_change(N, numbers) + 1
-#     print(f'{N= }')  
-#     if is_divisible_by_one_million(count):
-#         print(N)
-#         break
-#     N += 1
-
-
 def solve_euler_78(mod=1_000_000):
     # p[n] = number of partitions of n modulo mod
     p = [1]  # p[0] = 1
@@ -61,4 +33,4 @@ def solve_euler_78(mod=1_000_000):
 
 
 # Run it
-print(solve_euler_78())
+print(solve_euler_78(1_000_000))
