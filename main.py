@@ -1,57 +1,153 @@
-import matplotlib.pyplot as plt
+import random
+from collections import defaultdict
 
-def fmt_millions(value: int) -> str:
-    """Format large integers like 8100000 → '8.1M'."""
-    return f"{value/1_000_000:.1f}M"
 
-data = [
-    {"name": "Basic", "users": 1800, "cost": 4500},
-    {"name": "ERP",   "users": 1800, "cost": 3000},
-    {"name": "CAD",   "users": 400,  "cost": 5000},
-]
+# --- Board -------------------------------------------------------------------
 
-# One color per box
-colors = ["tab:blue", "tab:green", "tab:red"]
+class Board:
+    def __init__(self):
+        self.fields = [
+            'GO', 'A1', 'CC1', 'A2', 'T1', 'R1', 'B1', 'CH1', 'B2', 'B3', 'JAIL',
+            'C1', 'U1', 'C2', 'C3', 'R2', 'D1', 'CC2', 'D2', 'D3', 'FP',
+            'E1', 'CH2', 'E2', 'E3', 'R3', 'F1', 'F2', 'U2', 'F3', 'G2J',
+            'G1', 'G2', 'CC3', 'G3', 'R4', 'CH3', 'H1', 'T2', 'H2'
+        ]
+        self.size = len(self.fields)
+        self.index = {name: i for i, name in enumerate(self.fields)}
 
-fig, ax = plt.subplots(figsize=(10, 8))
+    def next_of_type(self, pos, prefix):
+        for i in range(1, self.size + 1):
+            idx = (pos + i) % self.size
+            if self.fields[idx].startswith(prefix):
+                return idx
+        return pos
 
-y_offset = 0
-max_users = max(item["users"] for item in data)
 
-for item, color in zip(data, colors):
-    width = item["users"]
-    height = item["cost"]
-    total_cost = item["users"] * item["cost"]
-    total_fmt = fmt_millions(total_cost)
+# --- Card Decks --------------------------------------------------------------
 
-    ax.broken_barh(
-        [(0, width)],
-        (y_offset, height),
-        facecolors=color,
-        edgecolor="black",
-        alpha=0.75
-    )
+class CardDeck:
+    def __init__(self, board: Board):
+        self.board = board
 
-    # Label inside the box: name + formatted total cost
-    ax.text(
-        width / 2,
-        y_offset + height / 2,
-        f"{item['name']}\n{total_fmt}",
-        ha="center",
-        va="center",
-        fontsize=14,
-        color="white",
-        weight="bold"
-    )
+    def community_chest(self, pos):
+        n = random.randint(1, 16)
+        match n:
+            case 1:
+                return self.board.index['GO']
+            case 2:
+                return self.board.index['JAIL']
+            case _:
+                return pos
 
-    y_offset += height
+    def chance(self, pos):
+        n = random.randint(1, 16)
+        match n:
+            case 1:
+                return self.board.index['GO']
+            case 2:
+                return self.board.index['JAIL']
+            case 3:
+                return self.board.index['C1']
+            case 4:
+                return self.board.index['E3']
+            case 5:
+                return self.board.index['H2']
+            case 6:
+                return self.board.index['R1']
+            case 7 | 8:
+                return self.board.next_of_type(pos, "R")
+            case 9:
+                return self.board.next_of_type(pos, "U")
+            case 10:
+                return (pos - 3) % self.board.size
+            case _:
+                return pos
 
-# X‑axis ticks every 500
-ax.set_xticks(range(0, max_users + 1, 500))
 
-ax.set_xlabel("Users")
-ax.set_ylabel("Cost per user")
-ax.set_title("Stacked Cost/User Footprint (Name + Total Cost in Millions)")
+# --- Monopoly Game -----------------------------------------------------------
 
-plt.tight_layout()
-plt.show()
+class MonopolyGame:
+    def __init__(self, board: Board, cards: CardDeck):
+        self.board = board
+        self.cards = cards
+        self.position = 0
+        self.consecutive_doubles = 0
+
+    def roll(self):
+        d1 = random.randint(1, 4)
+        d2 = random.randint(1, 4)
+        return d1, d2, d1 + d2
+
+    def step(self):
+        d1, d2, throw = self.roll()
+
+        # 3 doubles → jail
+        if d1 == d2:
+            self.consecutive_doubles += 1
+            if self.consecutive_doubles == 3:
+                self.position = self.board.index['JAIL']
+                self.consecutive_doubles = 0
+                return self.position
+        else:
+            self.consecutive_doubles = 0
+
+        # Move
+        self.position = (self.position + throw) % self.board.size
+
+        field = self.board.fields[self.position]
+
+        # Go to jail
+        if field == 'G2J':
+            self.position = self.board.index['JAIL']
+
+        # Community Chest
+        elif field.startswith('CC'):
+            self.position = self.cards.community_chest(self.position)
+
+        # Chance
+        elif field.startswith('CH'):
+            self.position = self.cards.chance(self.position)
+
+        return self.position
+
+
+# --- Simulator ---------------------------------------------------------------
+
+class Simulator:
+    def __init__(self, iterations=10_000_000):
+        self.iterations = iterations
+        self.board = Board()
+        self.cards = CardDeck(self.board)
+        self.game = MonopolyGame(self.board, self.cards)
+        self.counts = defaultdict(int)
+
+    def run(self):
+        self.counts[self.game.position] += 1
+
+        for _ in range(self.iterations):
+            pos = self.game.step()
+            self.counts[pos] += 1
+
+    def report(self):
+        total = sum(self.counts.values())
+
+        top5 = sorted(self.counts.items(), key=lambda x: x[1], reverse=True)[:5]
+        bottom3 = sorted(self.counts.items(), key=lambda x: x[1])[:3]
+
+        print("top-5")
+        for idx, c in top5:
+            pct = (c / total) * 100
+            print(f"{idx, self.board.fields[idx]}: {c} keer ({pct:.2f}%)")
+
+        print("bottom-3")
+        for idx, c in bottom3:
+            pct = (c / total) * 100
+            print(f"{idx, self.board.fields[idx]}: {c} keer ({pct:.2f}%)")
+
+
+# --- Run ---------------------------------------------------------------------
+
+if __name__ == "__main__":
+    sim = Simulator(iterations=10_000_000)
+    sim.run()
+    sim.report()

@@ -23,6 +23,9 @@ def minimal_path_sum_three_ways(matrix):
 
     return min(dp)
 
+
+
+
 if __name__ == "__main__":
-    matrix = read_matrix("problem82.txt")
+    matrix = read_matrix("problem81.txt")
     print(minimal_path_sum_three_ways(matrix))

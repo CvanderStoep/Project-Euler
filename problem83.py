@@ -13,6 +13,7 @@ def euler83(matrix: np.ndarray) -> int:
 
     # 4 richtingen
     dirs = [(1,0), (-1,0), (0,1), (0,-1)]
+    # dirs = [(1,0), (0,1)] # dit zou de code worden voor problem 81
 
     while pq:
         cost, r, c = heapq.heappop(pq)
