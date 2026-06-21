@@ -8,6 +8,7 @@ visited = [False] * (N + 1)
 longest_chain = []
 for start in range(1, N + 1):
     if visited[start]:
+        print(f"Already visited {start}, skipping.")
         continue
     chain = []
     current = start
