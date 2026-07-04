@@ -1,4 +1,66 @@
 from itertools import combinations
+def all_subsets(s):
+    """
+    Return all subsets of the input set s.
+    """
+    elements = list(s)
+    subsets = []
+    for r in range(len(elements) + 1):
+        for combo in combinations(elements, r):
+            subsets.append(set(combo))
+    return subsets
+
+def all_subset_pairs(s):
+    """
+    Return all combinations of two distinct subsets from s.
+    """
+    subsets = all_subsets(s)
+    return [(a, b) for a, b in combinations(subsets, 2)]
+
+def is_special_sum_set(s):
+    """
+    Check if a set of numbers is a special sum set.
+    
+    A set of numbers is a special sum set if:
+    1. The sum of any two disjoint subsets is not equal.
+    2. The sum of the elements in the larger subset is greater than the sum of the elements in the smaller subset.
+    
+    Args:
+        s (list): A list of integers representing the set.
+    
+    Returns:
+        bool: True if the set is a special sum set, False otherwise.
+    """
+    for a, b in all_subset_pairs(s):
+        if len(a) == 0 or len(b) == 0:
+            # print("One of the subsets is empty, skipping this pair.")
+            continue
+        if a.isdisjoint(b):
+            sum_a = sum(a)
+            sum_b = sum(b)
+            if sum_a == sum_b:
+                return False
+            if len(a) > len(b) and sum_a <= sum_b:
+                return False
+            if len(b) > len(a) and sum_b <= sum_a:
+                return False
+    return True
+
+
+s = {6, 9, 11, 12, 13}
+s = {11,17,20,22,23,24}
+s = {11, 18, 19, 20, 22, 25}
+s = {20, 31, 38, 39, 40, 42, 45}
+
+
+
+# for subset in all_subsets(s):
+#     print(subset)
+# print(is_special_sum_set(s), sum(s))  # Output: True
+
+
+#alternative implementation of is_special_sum_set
+from itertools import combinations
 
 # ------------------------------------------------------------
 # VALIDATION
@@ -75,7 +137,7 @@ def find_optimal_set(n, max_val=50):
 # ------------------------------------------------------------
 
 if __name__ == "__main__":
-    n = 7
+    n = 6
     optimal_set, total = find_optimal_set(n, max_val=50)
     print(f"Optimal set {{n={n}}}: {optimal_set}")
     print(f"Sum: {total}")

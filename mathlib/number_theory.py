@@ -1,4 +1,5 @@
 from math import gcd, isqrt
+from itertools import combinations
 
 
 def repeating_decimal(p, q):
@@ -105,3 +106,52 @@ def continued_fraction_e(n):
     if n % 3 == 2:
         return 2 * (n + 1) // 3
     return 1
+
+def all_subsets(s):
+    """
+    Return all subsets of the input set s.
+    """
+    elements = list(s)
+    subsets = []
+    for r in range(len(elements) + 1):
+        for combo in combinations(elements, r):
+            subsets.append(set(combo))
+    return subsets
+
+
+def all_subset_pairs(s):
+    """
+    Return all combinations of two distinct subsets from s.
+    """
+    subsets = all_subsets(s)
+    return [(a, b) for a, b in combinations(subsets, 2)]
+
+
+def is_special_sum_set(s):
+    """
+    Check if a set of numbers is a special sum set.
+    
+    A set of numbers is a special sum set if:
+    1. The sum of any two disjoint subsets is not equal.
+    2. The sum of the elements in the larger subset is greater than the sum of the elements in the smaller subset.
+    
+    Args:
+        s (list): A list of integers representing the set.
+    
+    Returns:
+        bool: True if the set is a special sum set, False otherwise.
+    """
+    for a, b in all_subset_pairs(s):
+        if len(a) == 0 or len(b) == 0:
+            # print("One of the subsets is empty, skipping this pair.")
+            continue
+        if a.isdisjoint(b):
+            sum_a = sum(a)
+            sum_b = sum(b)
+            if sum_a == sum_b:
+                return False
+            if len(a) > len(b) and sum_a <= sum_b:
+                return False
+            if len(b) > len(a) and sum_b <= sum_a:
+                return False
+    return True
