@@ -1,82 +1,8 @@
-from itertools import combinations
+from itertools import product
 
-# ------------------------------------------------------------
-# VALIDATION
-# ------------------------------------------------------------
+l1 = [1, 2, 3]
+l2 = ['a', 'b', 'c']
 
-def disjoint_subsets(S):
-    """Generate all pairs of disjoint non-empty subsets."""
-    n = len(S)
-    idx = range(n)
-    for r1 in range(1, n+1):
-        for c1 in combinations(idx, r1):
-            set1 = set(c1)
-            for r2 in range(1, n+1):
-                for c2 in combinations(idx, r2):
-                    set2 = set(c2)
-                    if set1.isdisjoint(set2):
-                        yield tuple(S[i] for i in c1), tuple(S[i] for i in c2)
-
-def is_valid(S):
-    """Check both special-sum-set rules for a sorted set S."""
-    S = sorted(S)
-
-    # Rule 2: larger subset must have larger sum
-    for k in range(1, len(S)):
-        if sum(S[:k+1]) <= sum(S[-k:]):
-            return False
-
-    # Rule 1: disjoint subsets must have different sums
-    for A, B in disjoint_subsets(S):
-        if sum(A) == sum(B):
-            return False
-
-    return True
-
-# ------------------------------------------------------------
-# BACKTRACKING SEARCH WITH PRUNING
-# ------------------------------------------------------------
-
-def find_optimal_set(n, max_val=50):
-    """Search for the minimal-sum special-sum set of length n."""
-    best_sum = float('inf')
-    best_set = None
-
-    def backtrack(prefix, next_min):
-        nonlocal best_sum, best_set
-
-        # If we have n elements, validate and update best
-        if len(prefix) == n:
-            if is_valid(prefix):
-                s = sum(prefix)
-                if s < best_sum:
-                    best_sum = s
-                    best_set = prefix[:]
-            return
-
-        remaining = n - len(prefix)
-
-        # Pruning: even with smallest possible future values, sum >= best?
-        min_possible_sum = sum(prefix) + sum(range(next_min, next_min + remaining))
-        if min_possible_sum >= best_sum:
-            return
-
-        # Try next values in increasing order
-        for x in range(next_min, max_val + 1):
-            prefix.append(x)
-            backtrack(prefix, x + 1)
-            prefix.pop()
-
-    backtrack([], 1)
-    return best_set, best_sum
-
-# ------------------------------------------------------------
-# DEMO FOR n = 6
-# ------------------------------------------------------------
-
-if __name__ == "__main__":
-    n = 7
-    optimal_set, total = find_optimal_set(n, max_val=50)
-    print(f"Optimal set {{n={n}}}: {optimal_set}")
-    print(f"Sum: {total}")
-
+combinations = product(l1, repeat=2)
+for combination in combinations:
+    print(combination)

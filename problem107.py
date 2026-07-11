@@ -65,9 +65,11 @@ def reverse_delete_mst(adj):
 
 if __name__ == '__main__':
     network_np = read_file_numpy_fast('problem107.txt')
+    print("Originele netwerk matrix:")
+    print(network_np)
 
     mst, mst_sum, saving = reverse_delete_mst(network_np)
 
     print(f"MST totale waarde: {mst_sum}")
     print(f"Besparing t.o.v. origineel: {saving/2}") # de graph is symmetrisch, dus delen door 2 om dubbele telling te vermijden
-    
+
