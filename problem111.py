@@ -30,46 +30,29 @@ def is_prime(n: int) -> bool:
 
 def generate_numbers_with_repeated_digit(n_digits: int, d: int, repeats: int):
     """
-    Genereer alle n-digit getallen waarin digit d precies 'repeats' keer voorkomt.
-    Andere posities worden gevuld met digits != d.
+    Generate all n-digit numbers with digit d appearing exactly 'repeats' times.
     """
-    positions = list(range(n_digits))
-    # Kies welke posities de repeated digit krijgen
-    # We doen dit via een bitmask-benadering: True = d, False = andere digit
-    mask = [True] * repeats + [False] * (n_digits - repeats)
-
-    # We genereren unieke mask-permutaties via set
     from itertools import permutations
-    seen_masks = set()
-    for m in permutations(mask):
-        if m in seen_masks:
-            continue
-        seen_masks.add(m)
-
-        # Voor de False-posities moeten we digits != d kiezen
-        other_positions = [i for i, flag in enumerate(m) if not flag]
-        k = len(other_positions)
-        # Andere digits: 0..9 behalve d
-        other_digits = [x for x in range(10) if x != d]
-
-        for combo in product(other_digits, repeat=k):
+    
+    other_digits = [x for x in range(10) if x != d]
+    mask = [True] * repeats + [False] * (n_digits - repeats)
+    
+    for positions in set(permutations(mask)):
+        other_positions = [i for i, is_d in enumerate(positions) if not is_d]
+        
+        for combo in product(other_digits, repeat=len(other_positions)):
             digits = [None] * n_digits
-            # Vul d op True-posities
-            for i, flag in enumerate(m):
-                if flag:
+            
+            for i, is_d in enumerate(positions):
+                if is_d:
                     digits[i] = d
-            # Vul andere digits
+            
             for pos, val in zip(other_positions, combo):
                 digits[pos] = val
-
-            # Geen leading zero
-            if digits[0] == 0:
-                continue
-
-            num = 0
-            for x in digits:
-                num = num * 10 + x
-            yield num
+            
+            if digits[0] != 0:
+                num = int(''.join(map(str, digits)))
+                yield num
 
 
 def S_10_d(n_digits: int, d: int) -> int:
@@ -100,4 +83,8 @@ def euler_111():
 
 
 if __name__ == "__main__":
-    print(euler_111())
+    # print(euler_111())
+
+    g = generate_numbers_with_repeated_digit(3, 1, 2)
+    for num in g:
+        print(num)

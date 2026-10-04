@@ -68,10 +68,13 @@ def sieve_of_eratosthenes(limit):
 
 
 
-
 def euler_totient(limit: int) -> list[int]:
     """
     Compute Euler's totient function φ(n) for all integers 0 ≤ n ≤ limit.
+
+    The totient φ(n) is the number of positive integers ≤ n that are
+    coprime with n, i.e. the count of integers between 1 and n whose greatest
+    common divisor with n is 1.
 
     This uses a sieve-based approach:
     - Initialize phi[n] = n.
