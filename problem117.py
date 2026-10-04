@@ -1,6 +1,5 @@
 from functools import lru_cache
 
-N = 50
 
 @lru_cache(None)
 def solve(pos):
@@ -13,4 +12,5 @@ def solve(pos):
             total += solve(pos + tile)
     return total
 
+N = 50
 print(solve(0))
