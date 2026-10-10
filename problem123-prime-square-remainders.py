@@ -1,15 +1,8 @@
-def primes():
-    """Yield primes in order using an incremental sieve."""
-    composites = {}
-    q = 2
-    while True:
-        if q not in composites:
-            yield q
-            composites[q * q] = [q]
-        else:
-            for p in composites.pop(q):
-                composites.setdefault(p + q, []).append(p)
-        q += 1
+
+
+
+
+from mathlib.primes import prime_generator
 
 
 def remainder(n, p):
@@ -19,7 +12,7 @@ def remainder(n, p):
 
 
 def solve(limit):
-    for n, p in enumerate(primes(), start=1):
+    for n, p in enumerate(prime_generator(), start=1):
         if remainder(n, p) > limit:
             return n
 
@@ -27,9 +20,14 @@ def solve(limit):
 if __name__ == "__main__":
     # sanity checks against the problem statement
     assert remainder(3, 5) == 5
-    for n, p in enumerate(primes(), start=1):
+    for n, p in enumerate(prime_generator(), start=1):
         if n > 200:
             break
         assert remainder(n, p) == ((p - 1) ** n + (p + 1) ** n) % (p * p)
     assert solve(10**9) == 7037
     print(solve(10**10))
+
+    for n,p in enumerate(prime_generator(), start=1):
+        if n > 10:
+            break
+        print(n, p)

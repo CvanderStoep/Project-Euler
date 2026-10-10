@@ -1,5 +1,7 @@
 from math import gcd
 
+from project_euler import main
+
 
 def is_prime(n):
     if n < 2:
@@ -102,3 +104,26 @@ def euler_totient(limit: int) -> list[int]:
 
 def relative_primes(n):
     return [k for k in range(1, n) if gcd(k, n) == 1]
+
+
+def prime_generator():
+    """Yield primes in order using an incremental sieve."""
+    composites = {}
+    q = 2
+    while True:
+        if q not in composites:
+            yield q
+            composites[q * q] = [q]
+        else:
+            for p in composites.pop(q):
+                composites.setdefault(p + q, []).append(p)
+        q += 1
+
+if __name__ == "__main__":
+    # Example usage of the prime_generator
+    primes = prime_generator()
+    for n, p in enumerate(primes, start=1):
+        if n > 10:
+            break
+        print(n, p)
+
