@@ -1,4 +1,4 @@
-with open('part_11_20/problem13.txt') as f:
+with open('archive/problem13.txt') as f:
     content = f.read().splitlines()
     content = list(map(int, content))
 print(content)

@@ -9,3 +9,5 @@ def max_remainder(a):
 
 summation = sum(max_remainder(a) for a in range(3, 1001))
 print(summation)
+
+
